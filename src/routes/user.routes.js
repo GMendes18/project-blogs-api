@@ -10,6 +10,8 @@ routes.post(
   userController.createUser,
 );
 
-routes.get('/', tokenValidation, userController.getAll);
+routes.get('/', tokenValidation, userController.getAllUsers);
+
+routes.get('/:id', tokenValidation, userController.getUserById);
 
 module.exports = routes;

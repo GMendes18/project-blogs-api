@@ -20,7 +20,7 @@ const createUser = async (req, res) => {
   }
 };
 
-const getAll = async (req, res) => {
+const getAllUsers = async (req, res) => {
   try {
     const users = await User.findAll({ attributes: { exclude: ['password'] } });
     return res.status(200).json(users);
@@ -30,4 +30,22 @@ const getAll = async (req, res) => {
   }
 };
 
-module.exports = { createUser, getAll };
+const getUserById = async (req, res) => {
+  try {
+    const userId = req.params.id;
+  
+    const user = await User.findByPk(userId, {
+      attributes: { exclude: ['password'] },
+    });
+  
+    if (!user) {
+      return res.status(404).json({ message: 'User does not exist' });
+    }
+    return res.status(200).json(user);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Internal server error' });
+  } 
+};
+
+module.exports = { createUser, getAllUsers, getUserById };
