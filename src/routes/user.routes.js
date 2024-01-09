@@ -1,6 +1,6 @@
 const routes = require('express').Router();
 const { userController } = require('../controllers');
-// const tokenValidation = require('../middlewares/tokenValidation');
+const tokenValidation = require('../middlewares/tokenValidation');
 const userValidation = require('../middlewares/userValidation');
 
 routes.post(
@@ -9,5 +9,7 @@ routes.post(
   userValidation.validateUser, 
   userController.createUser,
 );
+
+routes.get('/', tokenValidation, userController.getAll);
 
 module.exports = routes;
